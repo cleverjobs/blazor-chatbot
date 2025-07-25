@@ -32,7 +32,7 @@ const MessageInput = ({ onSendMessage, isLoading }: MessageInputProps) => {
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (event.key === 'Enter' && (event.metaKey || event.ctrlKey)) {
+    if (event.key === 'Enter' && !event.shiftKey) {
       event.preventDefault();
       if (!isLoading && form.getValues('message').trim()) {
         form.handleSubmit(onSubmit)();
@@ -67,7 +67,7 @@ const MessageInput = ({ onSendMessage, isLoading }: MessageInputProps) => {
             <Button
               type="submit"
               size="icon"
-              disabled={isLoading || !form.formState.isValid}
+              disabled={isLoading || !form.getValues('message').trim()}
               aria-label="Send message"
               data-testid="send-button"
             >
